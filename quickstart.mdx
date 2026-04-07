@@ -1,0 +1,106 @@
+---
+title: Quickstart
+description: Get your cmdocs documentation site running in under 2 minutes.
+---
+
+# Quickstart
+
+Get your documentation site up and running with a few commands.
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org) 18+ or [Bun](https://bun.sh) installed
+- A terminal
+
+## Create Your Project
+
+<Steps>
+  <Step>
+    **Initialize a new project**
+
+    <Tabs items={["npx", "bun"]}>
+      <Tab value="npx">
+        ```bash
+        npx cmdocs init my-docs
+        ```
+      </Tab>
+      <Tab value="bun">
+        ```bash
+        bunx cmdocs init my-docs
+        ```
+      </Tab>
+    </Tabs>
+
+    This creates a `my-docs/` directory with:
+    - `docs.json` — Site configuration
+    - MDX files — Example documentation pages
+    - `public/` — Static assets (favicon, images)
+  </Step>
+  <Step>
+    **Start the dev server**
+
+    ```bash
+    cd my-docs
+    npx cmdocs dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) in your browser. You should see your documentation site with hot-reload enabled.
+  </Step>
+  <Step>
+    **Edit your content**
+
+    Open `index.mdx` in your editor and make a change. The browser will update automatically.
+
+    Edit `docs.json` to customize your site name, colors, and navigation structure.
+  </Step>
+</Steps>
+
+## Project Structure
+
+<Files>
+  <Folder name="my-docs" defaultOpen>
+    <File name="docs.json" />
+    <File name="index.mdx" />
+    <File name="quickstart.mdx" />
+    <Folder name="guides" defaultOpen>
+      <File name="writing-content.mdx" />
+      <File name="components.mdx" />
+    </Folder>
+    <Folder name="public">
+      <File name="favicon.svg" />
+    </Folder>
+  </Folder>
+</Files>
+
+## Build for Production
+
+```bash
+npx cmdocs build
+```
+
+The static site will be generated and ready for deployment.
+
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `cmdocs init [name]` | Scaffold a new documentation project |
+| `cmdocs dev` | Start local dev server with hot-reload |
+| `cmdocs build` | Build static HTML for production |
+
+### Common Options
+
+```bash
+# Dev server on a custom port
+cmdocs dev --port 4000
+
+# Build from a specific source directory
+cmdocs build --source ./my-docs --output ./dist
+```
+
+## Next Steps
+
+<Cards>
+  <Card title="Writing Content" description="Learn MDX basics and frontmatter fields." href="/docs/guides/writing-content" />
+  <Card title="Components" description="Explore all available UI components." href="/docs/guides/components" />
+</Cards>

@@ -1,0 +1,213 @@
+---
+title: Components
+description: All available UI components for your documentation pages.
+---
+
+# Components
+
+cmdocs automatically imports [Fumadocs UI](https://fumadocs.dev) components. Just use them in your MDX files — no import statements needed.
+
+## Callout
+
+Highlight important information with callouts:
+
+<Callout type="info">
+  This is an informational callout. Use it for helpful tips and notes.
+</Callout>
+
+<Callout type="warn">
+  This is a warning callout. Use it for potential issues or caveats.
+</Callout>
+
+<Callout type="error">
+  This is an error callout. Use it for critical warnings or destructive actions.
+</Callout>
+
+```mdx
+<Callout type="info">
+  This is an informational callout.
+</Callout>
+
+<Callout type="warn">
+  This is a warning callout.
+</Callout>
+
+<Callout type="error">
+  This is an error callout.
+</Callout>
+```
+
+## Cards
+
+Display linked content in card grids:
+
+<Cards>
+  <Card title="Getting Started" description="Learn the basics of cmdocs." />
+  <Card title="Configuration" description="Customize your documentation site." />
+  <Card title="Components" description="Explore all UI components available for your pages." />
+</Cards>
+
+```mdx
+<Cards>
+  <Card title="Getting Started" description="Learn the basics." />
+  <Card title="Configuration" description="Customize your site." />
+</Cards>
+```
+
+Cards also support links with the `href` prop:
+
+```mdx
+<Cards>
+  <Card title="Fumadocs" description="Official docs." href="https://fumadocs.dev" />
+</Cards>
+```
+
+## Tabs
+
+Organize content into switchable tabs:
+
+<Tabs items={["npm", "bun", "pnpm"]}>
+  <Tab value="npm">
+    ```bash
+    npm install cmdocs
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bun add cmdocs
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add cmdocs
+    ```
+  </Tab>
+</Tabs>
+
+```mdx
+<Tabs items={["npm", "bun", "pnpm"]}>
+  <Tab value="npm">npm install cmdocs</Tab>
+  <Tab value="bun">bun add cmdocs</Tab>
+  <Tab value="pnpm">pnpm add cmdocs</Tab>
+</Tabs>
+```
+
+## Steps
+
+Create numbered step-by-step instructions:
+
+<Steps>
+  <Step>
+    **Install cmdocs** — Run the install command for your package manager.
+  </Step>
+  <Step>
+    **Initialize project** — Run `cmdocs init` to create your docs.
+  </Step>
+  <Step>
+    **Start writing** — Open your MDX files and begin documenting.
+  </Step>
+</Steps>
+
+```mdx
+<Steps>
+  <Step>Install cmdocs</Step>
+  <Step>Initialize project</Step>
+  <Step>Start writing</Step>
+</Steps>
+```
+
+## Accordion
+
+Collapsible content sections:
+
+<Accordions>
+  <Accordion title="What is cmdocs?">
+    cmdocs is a self-hosted documentation platform powered by Fumadocs and Next.js.
+  </Accordion>
+  <Accordion title="Is it free?">
+    Yes! cmdocs is open-source and free to use.
+  </Accordion>
+</Accordions>
+
+```mdx
+<Accordions>
+  <Accordion title="What is cmdocs?">
+    cmdocs is a self-hosted documentation platform.
+  </Accordion>
+  <Accordion title="Is it free?">
+    Yes! cmdocs is open-source and free to use.
+  </Accordion>
+</Accordions>
+```
+
+## Files
+
+Display file tree structures:
+
+<Files>
+  <Folder name="my-docs" defaultOpen>
+    <File name="docs.json" />
+    <File name="index.mdx" />
+    <File name="quickstart.mdx" />
+    <Folder name="guides">
+      <File name="setup.mdx" />
+      <File name="advanced.mdx" />
+    </Folder>
+    <Folder name="public">
+      <File name="favicon.svg" />
+    </Folder>
+  </Folder>
+</Files>
+
+```mdx
+<Files>
+  <Folder name="my-docs" defaultOpen>
+    <File name="docs.json" />
+    <File name="index.mdx" />
+    <Folder name="guides">
+      <File name="setup.mdx" />
+    </Folder>
+  </Folder>
+</Files>
+```
+
+## TypeTable
+
+Display typed property tables for documenting configuration options or API parameters:
+
+<TypeTable
+  type={{
+    name: { description: "Site name", type: "string", required: true },
+    description: { description: "Site description for SEO", type: "string" },
+    theme: { description: "Theme configuration", type: "ThemeConfig" },
+  }}
+/>
+
+```mdx
+<TypeTable
+  type={{
+    name: { description: "Site name", type: "string", required: true },
+    theme: { description: "Theme configuration", type: "ThemeConfig" },
+  }}
+/>
+```
+
+## Component Reference
+
+<TypeTable
+  type={{
+    Callout: { type: "Component", description: "Highlight important information. Props: type (info | warn | error)" },
+    Card: { type: "Component", description: "Display a card with title, description, and optional href link." },
+    Cards: { type: "Component", description: "Responsive grid container for Card components." },
+    Tab: { type: "Component", description: "A single tab panel. Must be inside Tabs. Props: value" },
+    Tabs: { type: "Component", description: "Tabbed content container. Props: items (string array)" },
+    Step: { type: "Component", description: "A single step in a Steps container." },
+    Steps: { type: "Component", description: "Numbered step-by-step instructions container." },
+    Accordion: { type: "Component", description: "Collapsible content section. Props: title" },
+    Accordions: { type: "Component", description: "Container for Accordion items." },
+    File: { type: "Component", description: "A file in a Files tree. Props: name" },
+    Folder: { type: "Component", description: "A folder in a Files tree. Props: name, defaultOpen" },
+    Files: { type: "Component", description: "File tree display container." },
+    TypeTable: { type: "Component", description: "Type/property documentation table. Props: type (object)" },
+  }}
+/>
