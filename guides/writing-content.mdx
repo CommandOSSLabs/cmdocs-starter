@@ -1,49 +1,50 @@
 ---
 title: Writing Content
-description: Learn how to write documentation with MDX — Markdown with JSX components.
+description: Author your docs in MDX — Markdown plus components, no imports needed.
 ---
 
 # Writing Content
 
-cmdocs uses [MDX](https://mdxjs.com/) — a format that lets you use JSX components inside Markdown documents. All Fumadocs components are auto-imported, so you never need to write import statements.
+cmdocs uses [MDX](https://mdxjs.com/) — a format that lets you use components inside Markdown. All built-in components are auto-imported, so you never need to write `import` statements.
 
 ## Frontmatter
 
-Every page starts with a YAML frontmatter block:
+Every page starts with a YAML frontmatter block at the top of the file:
 
 ```yaml
 ---
 title: Page Title
-description: A brief description of this page.
+description: A short description of the page.
 ---
 ```
 
-| Field | Description | Required |
-|-------|-------------|----------|
-| `title` | Page title displayed in the heading and sidebar | Yes |
-| `description` | Page description for SEO meta tags and search results | No |
-| `icon` | Icon name displayed next to the page title in the sidebar | No |
-| `full` | Hide the table of contents and use full-width layout | No |
+<TypeTable
+  type={{
+    title: { description: "Page title — shown in the heading and sidebar.", type: "string", required: true },
+    description: { description: "Page description — used for SEO meta tags and search results.", type: "string" },
+    icon: { description: "Lucide icon name shown next to the page in the sidebar.", type: "string" },
+    full: { description: "Hide the table of contents and use a full-width layout.", type: "boolean", default: "false" },
+  }}
+/>
 
-## Markdown Basics
+## Markdown basics
 
-All standard Markdown features are supported:
+All standard Markdown features work as you'd expect.
 
-### Text Formatting
+### Text formatting
 
 ```md
-**Bold text**
-*Italic text*
-~~Strikethrough~~
-`inline code`
+**Bold**, *italic*, ~~strikethrough~~, and `inline code`.
 ```
 
 ### Links
 
 ```md
 [External link](https://example.com)
-[Internal link](/docs/quickstart)
+[Internal link](/documentation/quickstart)
 ```
+
+Internal links use absolute paths starting from the site root.
 
 ### Lists
 
@@ -59,11 +60,11 @@ All standard Markdown features are supported:
 ### Blockquotes
 
 ```md
-> This is a blockquote.
-> It can span multiple lines.
+> A quote.
+> Spans multiple lines.
 ```
 
-### Code Blocks
+### Code blocks
 
 Use fenced code blocks with a language identifier for syntax highlighting:
 
@@ -75,28 +76,36 @@ function greet(name: string): string {
 ```
 ````
 
-Supported languages include: `typescript`, `javascript`, `python`, `rust`, `go`, `bash`, `json`, `yaml`, `css`, `html`, and many more.
+You can also add a `title` to the block:
+
+````md
+```ts title="src/greet.ts"
+export const greet = (name: string) => `Hello, ${name}!`;
+```
+````
 
 ### Tables
 
 ```md
 | Column 1 | Column 2 |
 |----------|----------|
-| Cell 1   | Cell 2   |
-| Cell 3   | Cell 4   |
+| Cell A   | Cell B   |
+| Cell C   | Cell D   |
 ```
 
 ### Images
 
-Place images in the `public/` directory and reference them with an absolute path:
+Place images in the `public/` folder and reference them with an absolute path:
 
 ```md
-![Alt text](/my-image.png)
+![Architecture diagram](/images/architecture.png)
 ```
 
-## JSX Components
+All images are zoomable — click any image to expand it.
 
-The power of MDX is using components directly in your content. cmdocs auto-imports all Fumadocs components — just use them:
+## JSX components
+
+The point of MDX is using components inline. Just type the component — no import needed:
 
 ```mdx
 <Callout type="info">
@@ -104,4 +113,32 @@ The power of MDX is using components directly in your content. cmdocs auto-impor
 </Callout>
 ```
 
-See the [Components](/docs/guides/components) page for all available components.
+<Callout type="info">
+  This is an informational callout.
+</Callout>
+
+See [Components](/documentation/guides/components) for the full list with examples.
+
+## Tips
+
+<Accordions>
+  <Accordion title="Where do new pages go?">
+    Anywhere under your project root. Then add the page slug (file path without `.mdx`) to `docs.json` under the appropriate `pages` array.
+  </Accordion>
+  <Accordion title="Can I nest pages in folders?">
+    Yes. A file at `guides/setup.mdx` becomes the slug `"guides/setup"` and the URL `/documentation/guides/setup`.
+  </Accordion>
+  <Accordion title="How do I link between pages?">
+    Use a Markdown link with the absolute URL: `[Setup guide](/documentation/guides/setup)`.
+  </Accordion>
+  <Accordion title="Can I hide the table of contents on a page?">
+    Yes — set `full: true` in the page's frontmatter.
+  </Accordion>
+</Accordions>
+
+## Next
+
+<Cards>
+  <Card title="Components" description="Every built-in component, with examples." href="/documentation/guides/components" icon="Layers" />
+  <Card title="Deploy" description="Ship your docs to production." href="/documentation/guides/deploy" icon="Cloud" />
+</Cards>

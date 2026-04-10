@@ -1,94 +1,145 @@
 ---
 title: Quickstart
-description: Get your cmdocs documentation site running in under 2 minutes.
+description: Edit a page, add a new one, and ship in under 5 minutes.
 ---
 
 # Quickstart
 
-Get your documentation site up and running with a few commands.
+By the end of this page you'll have edited a page, added a new one, and produced a production build.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org) 18+ or [Bun](https://bun.sh) installed
+- **Node.js 18+** or **Bun 1.0+**
 - A terminal
 
-## Create Your Project
+## 1. Run the dev server
+
+```bash
+npx cmdocs dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). You'll see this site, with hot reload enabled — every save updates the browser automatically.
+
+## 2. Edit a page
+
+Open `index.mdx` and change the title:
+
+```mdx title="index.mdx"
+---
+title: My First Docs
+description: Documentation for my project.
+---
+
+# Hello from my docs
+
+Welcome to my new documentation site.
+
+<Callout type="info">
+  Anything inside an MDX file is rendered as a page.
+</Callout>
+```
+
+Save the file. The browser updates instantly.
+
+## 3. Add a new page
 
 <Steps>
   <Step>
-    **Initialize a new project**
+    ### Create the MDX file
 
-    <Tabs items={["npx", "bun"]}>
-      <Tab value="npx">
-        ```bash
-        npx cmdocs init my-docs
-        ```
-      </Tab>
-      <Tab value="bun">
-        ```bash
-        bunx cmdocs init my-docs
-        ```
-      </Tab>
-    </Tabs>
+    Add a new file at `guides/setup.mdx`:
 
-    This creates a `my-docs/` directory with:
-    - `docs.json` — Site configuration
-    - MDX files — Example documentation pages
-    - `public/` — Static assets (favicon, images)
+    ```mdx title="guides/setup.mdx"
+    ---
+    title: Setup Guide
+    description: How to set up the project.
+    ---
+
+    # Setup
+
+    Follow these steps to get started.
+
+    <Steps>
+      <Step>Install dependencies</Step>
+      <Step>Configure environment variables</Step>
+      <Step>Run the dev server</Step>
+    </Steps>
+    ```
   </Step>
   <Step>
-    **Start the dev server**
+    ### Register it in `docs.json`
 
-    ```bash
-    cd my-docs
-    npx cmdocs dev
+    Add the new page to the `pages` array under your navigation group:
+
+    ```json title="docs.json"
+    {
+      "navigation": {
+        "tabs": [{
+          "tab": "Documentation",
+          "groups": [{
+            "group": "Guides",
+            "pages": [
+              "guides/writing-content",
+              "guides/components",
+              "guides/deploy",
+              "guides/setup"
+            ]
+          }]
+        }]
+      }
+    }
     ```
 
-    Open [http://localhost:3000](http://localhost:3000) in your browser. You should see your documentation site with hot-reload enabled.
+    <Callout type="info">
+      Page slugs are file paths **without** the `.mdx` extension.
+    </Callout>
   </Step>
   <Step>
-    **Edit your content**
+    ### Verify
 
-    Open `index.mdx` in your editor and make a change. The browser will update automatically.
-
-    Edit `docs.json` to customize your site name, colors, and navigation structure.
+    The new page appears in your sidebar and is reachable at `/documentation/guides/setup`.
   </Step>
 </Steps>
 
-## Project Structure
+## 4. Build for production
 
-<Files>
-  <Folder name="my-docs" defaultOpen>
-    <File name="docs.json" />
-    <File name="index.mdx" />
-    <File name="quickstart.mdx" />
-    <Folder name="guides" defaultOpen>
-      <File name="writing-content.mdx" />
-      <File name="components.mdx" />
-    </Folder>
-    <Folder name="public">
-      <File name="favicon.svg" />
-    </Folder>
-  </Folder>
-</Files>
-
-## Build for Production
+When you're ready to deploy:
 
 ```bash
 npx cmdocs build
 ```
 
-The static site will be generated and ready for deployment.
+This produces a fully static site in the `dist/` directory. Upload it to any static host:
 
-## CLI Commands
+<Tabs items={["Vercel", "Netlify", "S3 / nginx"]}>
+  <Tab value="Vercel">
+    ```bash
+    npx vercel deploy dist
+    ```
+  </Tab>
+  <Tab value="Netlify">
+    ```bash
+    npx netlify deploy --dir=dist --prod
+    ```
+  </Tab>
+  <Tab value="S3 / nginx">
+    ```bash
+    aws s3 sync dist s3://my-docs-bucket --delete
+    ```
+  </Tab>
+</Tabs>
 
-| Command | Description |
-|---------|-------------|
+Or skip the manual upload and let the [cmdocs dashboard](/documentation/guides/deploy) do it on every push.
+
+## CLI reference
+
+| Command | What it does |
+|---|---|
 | `cmdocs init [name]` | Scaffold a new documentation project |
-| `cmdocs dev` | Start local dev server with hot-reload |
-| `cmdocs build` | Build static HTML for production |
+| `cmdocs dev` | Start the local dev server with hot reload |
+| `cmdocs build` | Build a static site into `dist/` |
 
-### Common Options
+### Common options
 
 ```bash
 # Dev server on a custom port
@@ -98,9 +149,10 @@ cmdocs dev --port 4000
 cmdocs build --source ./my-docs --output ./dist
 ```
 
-## Next Steps
+## Next steps
 
 <Cards>
-  <Card title="Writing Content" description="Learn MDX basics and frontmatter fields." href="/docs/guides/writing-content" />
-  <Card title="Components" description="Explore all available UI components." href="/docs/guides/components" />
+  <Card title="Writing Content" description="MDX basics, frontmatter, and links." href="/documentation/guides/writing-content" icon="PencilLine" />
+  <Card title="Components" description="Every built-in component, with examples." href="/documentation/guides/components" icon="Layers" />
+  <Card title="Deploy" description="Ship to the cmdocs dashboard or any static host." href="/documentation/guides/deploy" icon="Cloud" />
 </Cards>

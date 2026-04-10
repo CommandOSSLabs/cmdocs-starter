@@ -1,48 +1,57 @@
 {
-  "$schema": "https://cmdocs.dev/schema/docs.json",
+  "$schema": "https://dev.cmdocs.sh/schema/docs.json",
   "name": "My Documentation",
   "description": "Built with cmdocs",
+  "favicon": "/favicon.svg",
   "theme": {
+    "preset": "neutral",
     "colors": {
       "primary": "#2563EB"
     },
     "darkMode": true,
-    "breadcrumb": true
+    "breadcrumb": true,
+    "lastUpdated": true
   },
   "seo": {
     "title": "My Documentation",
     "titleTemplate": "%s — My Docs",
     "description": "Documentation built with cmdocs"
   },
+  "navbar": {
+    "title": "My Docs",
+    "logo": {
+      "light": "/logo/light-logo-only.svg",
+      "dark": "/logo/dark-logo-only.svg",
+      "display": "brand-name-and-logo"
+    },
+    "github": "https://github.com/CommandOSSLabs/cmdocs-starter",
+    "links": []
+  },
   "navigation": {
     "tabs": [
       {
         "tab": "Documentation",
-        "description": "Learn how to build docs with cmdocs",
+        "description": "Learn how to use this project",
         "icon": "BookOpen",
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["index", "quickstart"]
+            "pages": [
+              "index",
+              "quickstart"
+            ]
           },
           {
             "group": "Guides",
-            "pages": ["guides/writing-content", "guides/components"]
+            "pages": [
+              "guides/writing-content",
+              "guides/components",
+              "guides/deploy"
+            ]
           }
         ]
       }
     ]
-  },
-  "navbar": {
-    "title": "My Docs",
-    "logo": {
-      "light": "/logo-light.svg",
-      "dark": "/logo-dark.svg",
-      "display": "logo-only",
-      "width": 120,
-      "height": 30
-    },
-    "links": []
   },
   "footer": {
     "text": "Built with cmdocs",

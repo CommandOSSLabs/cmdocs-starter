@@ -1,37 +1,62 @@
 ---
 title: Welcome
-description: Welcome to your documentation site, powered by cmdocs.
+description: Your new documentation site, built with cmdocs.
 ---
 
-# Welcome to My Docs
+# Welcome
 
-This documentation site was generated with [cmdocs](https://github.com/CommandOSSLabs/cmdocs) — an open-source, self-hosted documentation platform powered by [Fumadocs](https://fumadocs.dev) and [Next.js](https://nextjs.org).
+This is your brand-new documentation site. Edit `index.mdx` to make it yours.
 
-## Features
+<Callout type="info">
+  This page is just a starting point. Replace it with whatever your project needs — an introduction, a feature tour, or a quickstart of your own.
+</Callout>
+
+## What you can do here
 
 <Cards>
-  <Card title="MDX Content" description="Write documentation in MDX — Markdown with JSX components, auto-imported for you." />
-  <Card title="Customizable Themes" description="Configure colors, dark mode, layout, and more via docs.json." />
-  <Card title="Built-in Search" description="Full-text search powered by Orama — works out of the box with static exports." />
-  <Card title="Developer-First" description="CLI workflow with hot-reload, static export, and Git-based deployments." />
+  <Card title="Write in MDX" description="Markdown plus components, no imports needed." href="/documentation/guides/writing-content" icon="FileText" />
+  <Card title="Use rich components" description="Callouts, cards, tabs, steps, file trees, diagrams." href="/documentation/guides/components" icon="Layers" />
+  <Card title="Configure your site" description="Theme, navigation, and SEO from one docs.json." href="/documentation/quickstart" icon="Settings" />
+  <Card title="Deploy anywhere" description="Push to deploy via the cmdocs dashboard or self-host." href="/documentation/guides/deploy" icon="Rocket" />
 </Cards>
 
-## How It Works
+## How a cmdocs project is shaped
 
-<Steps>
-  <Step>
-    **Write** — Author your documentation in MDX files. Use Fumadocs components like Callout, Card, Tabs, and more.
-  </Step>
-  <Step>
-    **Configure** — Edit `docs.json` to customize your site name, theme, and navigation structure.
-  </Step>
-  <Step>
-    **Deploy** — Run `cmdocs build` for a static site, or connect your Git repo to the cmdocs dashboard for automated deployments.
-  </Step>
-</Steps>
+Every cmdocs project is just a `docs.json` and some MDX files:
 
-## Quick Links
+<Files>
+  <Folder name="my-docs" defaultOpen>
+    <File name="docs.json" />
+    <File name="index.mdx" />
+    <File name="quickstart.mdx" />
+    <Folder name="guides" defaultOpen>
+      <File name="writing-content.mdx" />
+      <File name="components.mdx" />
+      <File name="deploy.mdx" />
+    </Folder>
+    <Folder name="public" defaultOpen>
+      <File name="favicon.svg" />
+      <Folder name="logo" defaultOpen>
+        <File name="light.svg" />
+        <File name="dark.svg" />
+      </Folder>
+    </Folder>
+  </Folder>
+</Files>
 
-- [Quickstart](/docs/quickstart) — Get up and running in minutes
-- [Writing Content](/docs/guides/writing-content) — Learn MDX basics
-- [Components](/docs/guides/components) — Explore available UI components
+## Three commands to remember
+
+```bash
+npx cmdocs init my-docs   # scaffold a new project
+npx cmdocs dev            # run locally with hot reload
+npx cmdocs build          # produce a static site in dist/
+```
+
+## Where to next
+
+<Cards>
+  <Card title="Quickstart" description="Edit your first page and add a new one in 2 minutes." href="/documentation/quickstart" icon="Rocket" />
+  <Card title="Writing Content" description="MDX basics, frontmatter, and links." href="/documentation/guides/writing-content" icon="PencilLine" />
+  <Card title="Components" description="Every built-in component, with examples." href="/documentation/guides/components" icon="Layers" />
+  <Card title="Deploy" description="Ship your docs with the cmdocs dashboard or any static host." href="/documentation/guides/deploy" icon="Cloud" />
+</Cards>
