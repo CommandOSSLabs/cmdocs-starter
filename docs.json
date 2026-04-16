@@ -24,29 +24,43 @@
       "dark": "/logo/dark-logo-only.svg",
       "display": "brand-name-and-logo"
     },
-    "github": "https://github.com/CommandOSSLabs/cmdocs-starter",
+    "github": "https://github.com/your-org/your-repo",
     "links": []
   },
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "label": "Documentation",
+        "path": "documentation",
         "description": "Learn how to use this project",
         "icon": "BookOpen",
         "groups": [
           {
-            "group": "Getting Started",
+            "label": "Getting Started",
             "pages": [
-              "index",
-              "quickstart"
+              {
+                "file": "index"
+              },
+              {
+                "file": "quickstart"
+              }
             ]
           },
           {
-            "group": "Guides",
+            "label": "Guides",
             "pages": [
-              "guides/writing-content",
-              "guides/components",
-              "guides/deploy"
+              {
+                "file": "guides/writing-content"
+              },
+              {
+                "file": "guides/components"
+              },
+              {
+                "file": "guides/validate"
+              },
+              {
+                "file": "guides/deploy"
+              }
             ]
           }
         ]

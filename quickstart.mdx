@@ -1,26 +1,63 @@
 ---
 title: Quickstart
-description: Edit a page, add a new one, and ship in under 5 minutes.
+description: Edit a page, add a new one, validate, and ship to the cmdocs dashboard.
 ---
 
 # Quickstart
 
-By the end of this page you'll have edited a page, added a new one, and produced a production build.
+By the end of this page you'll have edited a page, added a new one, validated everything with `cmdocs check`, and pushed to a live site on the cmdocs dashboard.
 
 ## Prerequisites
 
-- **Node.js 18+** or **Bun 1.0+**
+- **Node.js 20+** or **Bun 1.0+**
 - A terminal
 
-## 1. Run the dev server
+## 1. Install the cmdocs CLI
+
+The easiest way is to use `npx` — no install, always the latest version:
+
+<Tabs items={["npx (no install)", "Global install"]}>
+  <Tab value="npx (no install)">
+    Just prefix every command with `npx`:
+
+    ```bash
+    npx cmdocs dev
+    npx cmdocs check
+    ```
+
+    On first run, npm downloads the package into a cache. Subsequent runs are instant.
+  </Tab>
+  <Tab value="Global install">
+    If you run cmdocs often, install it once:
+
+    ```bash
+    npm install -g cmdocs
+    # or: bun install -g cmdocs
+    # or: pnpm add -g cmdocs
+    ```
+
+    Then drop the `npx` prefix:
+
+    ```bash
+    cmdocs dev
+    cmdocs check
+    ```
+  </Tab>
+</Tabs>
+
+## 2. Run the dev server
 
 ```bash
 npx cmdocs dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). You'll see this site, with hot reload enabled — every save updates the browser automatically.
+Open [http://localhost:3000](http://localhost:3000). You'll see this site, with hot reload enabled — every save to `docs.json`, an `.mdx` file, or an asset updates the browser automatically.
 
-## 2. Edit a page
+<Callout type="info">
+  If port 3000 is busy, cmdocs picks the next available port (3001, 3002, …) and logs which one it chose.
+</Callout>
+
+## 3. Edit a page
 
 Open `index.mdx` and change the title:
 
@@ -41,7 +78,7 @@ Welcome to my new documentation site.
 
 Save the file. The browser updates instantly.
 
-## 3. Add a new page
+## 4. Add a new page
 
 <Steps>
   <Step>
@@ -74,24 +111,30 @@ Save the file. The browser updates instantly.
     ```json title="docs.json"
     {
       "navigation": {
-        "tabs": [{
-          "tab": "Documentation",
-          "groups": [{
-            "group": "Guides",
-            "pages": [
-              "guides/writing-content",
-              "guides/components",
-              "guides/deploy",
-              "guides/setup"
+        "tabs": [
+          {
+            "label": "Documentation",
+            "path": "documentation",
+            "groups": [
+              {
+                "label": "Guides",
+                "pages": [
+                  { "file": "guides/writing-content" },
+                  { "file": "guides/components" },
+                  { "file": "guides/validate" },
+                  { "file": "guides/deploy" },
+                  { "file": "guides/setup" }
+                ]
+              }
             ]
-          }]
-        }]
+          }
+        ]
       }
     }
     ```
 
     <Callout type="info">
-      Page slugs are file paths **without** the `.mdx` extension.
+      Every page is an object with a `file` field — the MDX path without `.mdx`. Add `path` to override the URL, `label` to override the sidebar display. See [Writing Content](/documentation/guides/writing-content) for details.
     </Callout>
   </Step>
   <Step>
@@ -101,58 +144,68 @@ Save the file. The browser updates instantly.
   </Step>
 </Steps>
 
-## 4. Build for production
+## 5. Validate before you commit
 
-When you're ready to deploy:
+Run `cmdocs check` to catch typos, broken links, and schema errors before they reach the dashboard:
 
 ```bash
-npx cmdocs build
+npx cmdocs check
 ```
 
-This produces a fully static site in the `dist/` directory. Upload it to any static host:
+It validates:
 
-<Tabs items={["Vercel", "Netlify", "S3 / nginx"]}>
-  <Tab value="Vercel">
-    ```bash
-    npx vercel deploy dist
-    ```
-  </Tab>
-  <Tab value="Netlify">
-    ```bash
-    npx netlify deploy --dir=dist --prod
-    ```
-  </Tab>
-  <Tab value="S3 / nginx">
-    ```bash
-    aws s3 sync dist s3://my-docs-bucket --delete
-    ```
-  </Tab>
-</Tabs>
+| Check | What it catches |
+|---|---|
+| **docs.json schema** | Invalid JSON, missing fields, wrong types |
+| **Navigation references** | Pages in `docs.json` that don't have a matching `.mdx` |
+| **MDX frontmatter** | Missing `title`, malformed YAML |
+| **Assets** | Missing favicon, logos, or images referenced in config |
+| **Duplicate slugs** | The same page listed twice in navigation |
+| **Internal links** | `href` values in MDX and navbar/footer that point to pages that don't exist |
 
-Or skip the manual upload and let the [cmdocs dashboard](/documentation/guides/deploy) do it on every push.
+Exit code `0` means you're good to ship. Exit code `1` prints every problem with a file and line number.
+
+<Callout type="info">
+  Wire `cmdocs check` into a git pre-commit hook so broken docs never reach `main`. See the [Validate guide](/documentation/guides/validate) for a one-minute setup.
+</Callout>
+
+## 6. Deploy
+
+Commit your work and push it to a GitHub repo — then connect the repo in the cmdocs dashboard. Every future push triggers a build and deploys to `<your-project>.cmdocs.app` automatically.
+
+```bash
+git add .
+git commit -m "initial docs"
+git push origin main
+```
+
+Full walkthrough with screenshots: [Deploy guide](/documentation/guides/deploy).
 
 ## CLI reference
 
 | Command | What it does |
 |---|---|
-| `cmdocs init [name]` | Scaffold a new documentation project |
-| `cmdocs dev` | Start the local dev server with hot reload |
-| `cmdocs build` | Build a static site into `dist/` |
+| `cmdocs init [name]` | Scaffold a new project (you already ran this) |
+| `cmdocs dev` | Start the local dev server with hot reload and auto-port |
+| `cmdocs check` | Validate docs.json, MDX frontmatter, assets, and internal links |
 
 ### Common options
 
 ```bash
-# Dev server on a custom port
+# Dev server on a specific port
 cmdocs dev --port 4000
 
-# Build from a specific source directory
-cmdocs build --source ./my-docs --output ./dist
+# Validate a specific source directory
+cmdocs check --source ./my-docs
 ```
+
+Production builds are handled by the cmdocs dashboard — there is no local `build` command. Push to deploy.
 
 ## Next steps
 
 <Cards>
   <Card title="Writing Content" description="MDX basics, frontmatter, and links." href="/documentation/guides/writing-content" icon="PencilLine" />
   <Card title="Components" description="Every built-in component, with examples." href="/documentation/guides/components" icon="Layers" />
-  <Card title="Deploy" description="Ship to the cmdocs dashboard or any static host." href="/documentation/guides/deploy" icon="Cloud" />
+  <Card title="Validate" description="Pre-commit hook + CI setup for cmdocs check." href="/documentation/guides/validate" icon="ShieldCheck" />
+  <Card title="Deploy" description="Connect a GitHub repo and push to deploy." href="/documentation/guides/deploy" icon="Cloud" />
 </Cards>

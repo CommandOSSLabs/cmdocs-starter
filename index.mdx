@@ -5,33 +5,60 @@ description: Your new documentation site, built with cmdocs.
 
 # Welcome
 
-This is your brand-new documentation site. Edit `index.mdx` to make it yours.
+You just scaffolded a brand-new documentation site with `cmdocs init`. Everything you see is a starting point — open the files and make them yours.
 
 <Callout type="info">
-  This page is just a starting point. Replace it with whatever your project needs — an introduction, a feature tour, or a quickstart of your own.
+  Your dev server is (or is about to be) running at [http://localhost:3000](http://localhost:3000). Every save to `docs.json`, an `.mdx` file, or a logo hot-reloads the browser.
 </Callout>
 
-## What you can do here
+## First-edit checklist
 
-<Cards>
-  <Card title="Write in MDX" description="Markdown plus components, no imports needed." href="/documentation/guides/writing-content" icon="FileText" />
-  <Card title="Use rich components" description="Callouts, cards, tabs, steps, file trees, diagrams." href="/documentation/guides/components" icon="Layers" />
-  <Card title="Configure your site" description="Theme, navigation, and SEO from one docs.json." href="/documentation/quickstart" icon="Settings" />
-  <Card title="Deploy anywhere" description="Push to deploy via the cmdocs dashboard or self-host." href="/documentation/guides/deploy" icon="Rocket" />
-</Cards>
+Work through this list before you add content of your own — each item takes under a minute.
 
-## How a cmdocs project is shaped
+<Steps>
+  <Step>
+    ### Rename your site
 
-Every cmdocs project is just a `docs.json` and some MDX files:
+    Open `docs.json` and change `name`, `navbar.title`, `seo.title`, and `footer.copyright` to your own. These flow into the browser tab title, navbar, and SEO meta tags.
+  </Step>
+  <Step>
+    ### Replace the logos
+
+    Drop your own SVG into `public/logo/light.svg` and `public/logo/dark.svg`. Keep the filenames or update `navbar.logo` in `docs.json` to point at new ones. Also replace `public/favicon.svg`.
+  </Step>
+  <Step>
+    ### Point GitHub at your repo
+
+    In `docs.json`, swap `navbar.github` to your project's GitHub URL — the navbar icon will link there.
+  </Step>
+  <Step>
+    ### Edit this page
+
+    Open `index.mdx` and replace this checklist with your project's real introduction.
+  </Step>
+  <Step>
+    ### Validate before you commit
+
+    Run `npx cmdocs check` — it verifies `docs.json`, MDX frontmatter, referenced assets, and every internal link. Wire it into a git pre-commit hook so broken docs never reach `main`. See the [Validate guide](/documentation/guides/validate).
+  </Step>
+  <Step>
+    ### Deploy
+
+    Push your repo to GitHub and connect it in the [cmdocs dashboard](https://cmdocs.sh). Every future push triggers a build and deploys to `<your-project>.cmdocs.app`. See the [Deploy guide](/documentation/guides/deploy).
+  </Step>
+</Steps>
+
+## What's in this template
 
 <Files>
-  <Folder name="my-docs" defaultOpen>
+  <Folder name="." defaultOpen>
     <File name="docs.json" />
     <File name="index.mdx" />
     <File name="quickstart.mdx" />
     <Folder name="guides" defaultOpen>
       <File name="writing-content.mdx" />
       <File name="components.mdx" />
+      <File name="validate.mdx" />
       <File name="deploy.mdx" />
     </Folder>
     <Folder name="public" defaultOpen>
@@ -44,19 +71,18 @@ Every cmdocs project is just a `docs.json` and some MDX files:
   </Folder>
 </Files>
 
-## Three commands to remember
+| Path | Purpose |
+|---|---|
+| `docs.json` | Single source of truth — name, theme, navigation, navbar, footer, SEO |
+| `*.mdx` | A documentation page. Any file listed in `docs.json` navigation is published |
+| `public/` | Static assets. `public/logo/light.svg` is served at `/logo/light.svg` |
 
-```bash
-npx cmdocs init my-docs   # scaffold a new project
-npx cmdocs dev            # run locally with hot reload
-npx cmdocs build          # produce a static site in dist/
-```
-
-## Where to next
+## Where to go next
 
 <Cards>
-  <Card title="Quickstart" description="Edit your first page and add a new one in 2 minutes." href="/documentation/quickstart" icon="Rocket" />
-  <Card title="Writing Content" description="MDX basics, frontmatter, and links." href="/documentation/guides/writing-content" icon="PencilLine" />
-  <Card title="Components" description="Every built-in component, with examples." href="/documentation/guides/components" icon="Layers" />
-  <Card title="Deploy" description="Ship your docs with the cmdocs dashboard or any static host." href="/documentation/guides/deploy" icon="Cloud" />
+  <Card title="Quickstart" description="Edit a page, add a new one, validate, and ship." href="/documentation/quickstart" icon="Rocket" />
+  <Card title="Writing Content" description="MDX basics, frontmatter, links, and SEO tips." href="/documentation/guides/writing-content" icon="PencilLine" />
+  <Card title="Components" description="Every built-in component, with copy-paste examples." href="/documentation/guides/components" icon="Layers" />
+  <Card title="Validate" description="Pre-commit hook + CI for cmdocs check." href="/documentation/guides/validate" icon="ShieldCheck" />
+  <Card title="Deploy" description="Connect a GitHub repo and push to deploy." href="/documentation/guides/deploy" icon="Cloud" />
 </Cards>

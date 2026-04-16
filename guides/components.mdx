@@ -119,23 +119,23 @@ Collapsible sections — great for FAQs.
 
 <Accordions>
   <Accordion title="What is cmdocs?">
-    cmdocs is a self-hosted documentation platform that builds beautiful static sites from MDX.
+    cmdocs is a documentation platform that builds beautiful static sites from MDX.
   </Accordion>
   <Accordion title="Is it free?">
-    Yes — cmdocs is open-source and free to use.
+    cmdocs has a generous free tier — get started without a credit card.
   </Accordion>
-  <Accordion title="Can I self-host?">
-    Absolutely. The build output is fully static — host it on any CDN or web server.
+  <Accordion title="How do I deploy?">
+    Push your repo to GitHub and connect it in the [cmdocs dashboard](https://cmdocs.sh). Every commit triggers a build and deploys to `<your-project>.cmdocs.app` automatically.
   </Accordion>
 </Accordions>
 
 ```mdx
 <Accordions>
   <Accordion title="What is cmdocs?">
-    cmdocs is a self-hosted documentation platform.
+    cmdocs is a documentation platform.
   </Accordion>
   <Accordion title="Is it free?">
-    Yes — open-source and free to use.
+    cmdocs has a generous free tier.
   </Accordion>
 </Accordions>
 ```
@@ -201,16 +201,16 @@ Document props, configuration options, or API parameters.
 Render diagrams from [Mermaid](https://mermaid.js.org/) syntax. Great for flow charts, sequence diagrams, and architecture overviews.
 
 <Mermaid chart="graph LR;
-    A[Write MDX] --> B[cmdocs build];
-    B --> C[Static site];
-    C --> D[Deploy];" />
+    A[Write MDX] --> B[git push];
+    B --> C[cmdocs dashboard];
+    C --> D[Live site];" />
 
 ````mdx
 ```mermaid
 graph LR;
-    A[Write MDX] --> B[cmdocs build];
-    B --> C[Static site];
-    C --> D[Deploy];
+    A[Write MDX] --> B[git push];
+    B --> C[cmdocs dashboard];
+    C --> D[Live site];
 ```
 ````
 
@@ -230,13 +230,27 @@ Place images in the `public/` folder and reference them with an absolute path st
 
 ## Banner
 
-Display a site-wide announcement at the top of every page (configured globally, not per page):
+Display a site-wide announcement above the navbar. Use `<Banner>` at the top of any MDX file — the most recent occurrence wins, and it appears on every page:
+
+```mdx title="index.mdx"
+<Banner>
+  cmdocs v1.0 is out — [read the release notes](/documentation/changelog).
+</Banner>
+```
+
+Banners support full Markdown, including links and inline code. Common patterns:
 
 ```mdx
 <Banner>
-  cmdocs v1.0 is out — read the release notes!
+  🎉 We just shipped v2 — [see what's new](/documentation/changelog).
+</Banner>
+
+<Banner>
+  ⚠️ Scheduled maintenance tonight, 22:00-23:00 UTC.
 </Banner>
 ```
+
+To remove the banner, delete the `<Banner>` tag from your MDX. To show it only on certain pages, place the tag only in those files.
 
 ## Component reference
 
